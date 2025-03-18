@@ -1,0 +1,26 @@
+<div class="container mt-5">
+  <h1 class="mb-4">My Entries</h1>
+
+  <% if @entries.empty? %>
+    <p>No entries found. Start by adding a new one!</p>
+  <% else %>
+    <div class="row">
+      <% @entries.each do |entry| %>
+        <div class="col-md-4 mb-4">
+          <div class="card">
+            <% if entry.uploaded_image.attached? %>
+              <img src="<%= url_for(entry.uploaded_image) %>" class="card-img-top" alt="Entry Image">
+            <% end %>
+            <div class="card-body">
+              <h5 class="card-title"><%= entry["title"] %></h5>
+              <p class="card-text"><strong>Date:</strong> <%= entry["occurred_on"] %></p>
+              <p class="card-text"><%= entry["description"] %></p>
+            </div>
+          </div>
+        </div>
+      <% end %>
+    </div>
+  <% end %>
+
+  <a href="/places" class="btn btn-primary">Back to Places</a>
+</div>

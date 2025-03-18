@@ -1,16 +1,38 @@
-<h1><%= @place["name"] %></h1>
+<div class="container mt-5">
+  <h1 class="mb-4"><%= @place["name"] %></h1>
 
-<h2>My Entries</h2>
-<% for entry in @entries %>
-  <h3><%= entry["title"] %></h3>
-  <h4><%= entry["occurred_on"] %></h4>
-  <p><%= entry["description"] %></p>
-<% end %>
+  <% if @current_user == nil %>
+    <div class="alert alert-warning" role="alert">
+      Please log in to view or add entries.
+    </div>
+  <% else %>
+    <div class="d-flex justify-content-between align-items-center mb-3">
+      <a href="/entries/new?place_id=<%= @place["id"] %>" class="btn btn-primary">New Post</a>
+    </div>
 
-<p>
-  <a href="/entries/new?place_id=<%= @place["id"] %>">New Entry</a>
-</p>
+    <% if @entries.empty? %>
+      <p class="text-muted">No entries yet.</p>
+    <% else %>
+      <div class="row">
+        <% for entry in @entries %>
+          <div class="col-md-4">
+            <div class="card mb-4 shadow-sm">
+              <% if entry.uploaded_image.attached? %>
+                <img src="<%= url_for(entry.uploaded_image) %>" class="card-img-top">
+              <% end %>
+              <div class="card-body">
+                <h3 class="card-title"><%= entry["title"] %></h3>
+                <h4 class="card-subtitle mb-2 text-muted"><%= entry["occurred_on"] %></h4>
+                <p class="card-text"><%= entry["description"] %></p>
+              </div>
+            </div>
+          </div>
+        <% end %>
+      </div>
+    <% end %>
 
-<p>
-  <a href="/places">Back to All Places</a>
-</p>
+    <p>
+      <a href="/places" class="btn btn-secondary">Back to All Places</a>
+    </p>
+  <% end %>
+</div>

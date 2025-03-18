@@ -1,0 +1,16 @@
+<div class="container mt-5">
+  <h1 class="mb-4"><%= @entry["title"] %></h1>
+
+  <% if @entry.uploaded_image.attached? %>
+    <div class="mb-3">
+      <img src="<%= url_for(@entry.uploaded_image) %>" class="img-fluid rounded">
+    </div>
+  <% end %>
+
+  <p class="text-muted"><strong>Occurred On:</strong> <%= @entry["occurred_on"] %></p>
+  <p class="lead"><%= @entry["description"] %></p>
+
+  <p>
+    <a href="/places/<%= @entry["place_id"] %>" class="btn btn-secondary">Back to Place</a>
+  </p>
+</div>
